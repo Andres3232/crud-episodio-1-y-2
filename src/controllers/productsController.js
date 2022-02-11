@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { validationResult } = require('express-validator');
 
 const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
 const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
@@ -33,14 +34,32 @@ const controller = {
 	// Create -  Method to store
 	store: (req, res) => {
 
-		let newProduct = {
-			id: products[products.length - 1].id + 1,
-			...req.body,
-			image:req.file.filename
-		};
-		 let productsNews = [...products, newProduct]
-		fs.writeFileSync(productsFilePath, JSON.stringify(productsNews, null, ' '));
-		res.redirect('/');
+        const errors = validationResult(req);
+		
+
+		if (!errors.isEmpty()) {
+            return res.render('product-create-form', { errors: errors.mapped(), old: req.body })
+			
+		}else{
+
+			let image
+			if(req.file != undefined){
+				image = req.file.filename
+			} else {
+				image = 'default-image.png'
+			}
+			
+			let newProduct = {
+				id: products[products.length - 1].id + 1,
+				...req.body,
+				image
+
+			};
+			 let productsNews = [...products, newProduct]
+			fs.writeFileSync(productsFilePath, JSON.stringify(productsNews, null, ' '));
+			res.redirect('/');
+		}
+
 	},
 
 	// Update - Form to edit
@@ -53,18 +72,18 @@ const controller = {
 	update: (req, res) => {
 		let id = req.params.id;
 		let productToEdit = products.find(product => product.id == id)
-		let image
 
-		// if(req.files[0] != undefined){
-		// 	image = req.files[0].filename
-		// } else {
-		// 	image = productToEdit.image
-		// }
+		let image
+		if(req.file != undefined){
+			image = req.file.filename
+		} else {
+			image = 'default-image.png'
+		}
 
 		productToEdit = {
 			id: productToEdit.id,
 			...req.body,
-			image: req.file ? req.file.filename : productToEdit.image
+			image
 		};
 		
 		let newProducts = products.map(product => {

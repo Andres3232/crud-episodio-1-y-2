@@ -6,6 +6,7 @@ const path = require('path')
 
 // ************ Controller Require ************
 const productsController = require('../controllers/productsController');
+const validationCreate = require('../middlewares/validation');
 
 // ************ Multer ************
 // 1. requerimos multer
@@ -32,7 +33,7 @@ router.get('/', productsController.index);
 
 /*** CREATE ONE PRODUCT ***/ 
 router.get('/create', productsController.create); 
-router.post('/', upload.any('image'), productsController.store); 
+router.post('/', upload.single('image'),validationCreate, productsController.store); 
 
 
 /*** GET ONE PRODUCT ***/ 

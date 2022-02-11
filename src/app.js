@@ -25,6 +25,16 @@ app.set('views', path.join(__dirname, '/views')); // Define la ubicación de la 
 
 // ************ WRITE YOUR CODE FROM HERE ************
 // ************ Route System require and use() ************
+// app.use((req,res,next) => {
+//   console.log('Hola');
+
+// })
+
+// const middle = (req,res,next) => {
+//   console.log('desde el enrutador')
+//   next()
+  
+// }
 const mainRouter = require('./routes/main'); // Rutas main
 const productsRouter = require('./routes/products'); // Rutas /products
 
