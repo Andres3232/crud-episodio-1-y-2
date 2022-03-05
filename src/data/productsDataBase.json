@@ -151,5 +151,23 @@
   "category": "in-sale",
   "description": "dfgdfg",
   "image": "image-1644372764958.jpg"
+ },
+ {
+  "id": 20,
+  "name": "zapatillas",
+  "price": "123",
+  "discount": "15",
+  "category": "in-sale",
+  "description": "sa",
+  "image": "default-image.png"
+ },
+ {
+  "id": 21,
+  "name": "zapatillas",
+  "price": "1231",
+  "discount": "15",
+  "category": "in-sale",
+  "description": "asdagfqwg",
+  "image": "default-image.png"
  }
 ]

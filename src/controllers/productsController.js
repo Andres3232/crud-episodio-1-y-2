@@ -15,7 +15,7 @@ const controller = {
 			toThousand
 		})
 	},
-
+	
 	// Detail - Detail from one product
 	detail: (req, res) => {
 		let id = req.params.id
@@ -25,18 +25,21 @@ const controller = {
 			toThousand
 		})
 	},
-
+	
 	// Create - Form to create
 	create: (req, res) => {
 		res.render('product-create-form')
+		console.log(req.cookies.color);
 	},
 	
 	// Create -  Method to store
 	store: (req, res) => {
-
-        const errors = validationResult(req);
 		
+        const errors = validationResult(req);
 
+		//res.cookie('color','rojo')
+		console.log(errors.errors);
+		
 		if (!errors.isEmpty()) {
             return res.render('product-create-form', { errors: errors.mapped(), old: req.body })
 			
@@ -57,6 +60,7 @@ const controller = {
 			};
 			 let productsNews = [...products, newProduct]
 			fs.writeFileSync(productsFilePath, JSON.stringify(productsNews, null, ' '));
+
 			res.redirect('/');
 		}
 
